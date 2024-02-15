@@ -2,8 +2,7 @@ import os
 import json
 import requests
 
-# Assuming your JSON data is stored in a file called 'products.json'
-json_file_path = 'JSON/KR_Creative.json'
+json_file_path = 'JSON/AuburnLeather.json'
 
 # Extract name for folder creation
 base_name = os.path.basename(json_file_path)
@@ -40,5 +39,4 @@ def process_products(json_file_path):
         print(f"Downloaded {image_file_name} to {dir_path}")
     print(count)
 
-# Replace 'products.json' with the path to your actual JSON data file
 process_products(json_file_path)

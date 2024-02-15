@@ -6,7 +6,7 @@ import csv
 social_media_platforms = ["Facebook", "Instagram", "Twitter", "LinkedIn", "Google Merchant"]
 
 # Read the JSON data
-with open('JSON/LibertyTableTopProducts.json') as json_file:
+with open('JSON/AuburnLeather.json') as json_file:
     data = json.load(json_file)
 
 # Prepare data for CSV
@@ -23,7 +23,7 @@ for item in data:
         csv_data.append(row)
 
 # Write data to CSV
-csv_filename = 'CSV/output.csv'
+csv_filename = 'CSV/AuburnLeather.csv'
 with open(csv_filename, mode='w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(['id', 'name', 'metaTitle', 'metaDescription', 'socialNetwork'])
