@@ -6,12 +6,20 @@ import os
 
 # Define the size requirements for each platform
 size_requirements = {
+    'RetailSite': (400, 400),
     'GoogleMerchant': (100, 100),
     'Facebook': (1200, 630),
     'LinkedIn': (1200, 627),
     'Twitter': (1200, 600),
     'Instagram': (1080, 1080)
 }
+
+def determine_retail_image_size(original_width, original_height):
+    if original_width == original_height:
+        return original_width
+    # If not a square image, set size to be square based on max_dimension
+    max_dimension = max(original_width, original_height)
+    return round(max_dimension / 100) * 100
 
 def resize_image(image_path, output_path, platform):
     # Open the image
@@ -20,15 +28,6 @@ def resize_image(image_path, output_path, platform):
     # Convert to RGBA if RGB (JPEG)
     if image.mode != 'RGBA':
         image = image.convert('RGBA')
-
-    # Define platform-specific size requirements
-    size_requirements = {
-        'GoogleMerchant': (100, 100),
-        'Facebook': (1200, 630),
-        'LinkedIn': (1200, 627),
-        'Twitter': (1200, 600),
-        'Instagram': (1080, 1080)
-    }
 
     # Check if the platform is valid
     if platform not in size_requirements:
@@ -51,6 +50,33 @@ def resize_image(image_path, output_path, platform):
                 new_height = max(original_height, required_size[1])
                 new_width = int(new_height * aspect_ratio)
         resized_image = image.resize((new_width, new_height), Image.Resampling.LANCZOS)
+    elif platform == 'RetailSite': 
+        original_width, original_height = image.size
+        target_size = determine_retail_image_size(original_width, original_height)
+        required_size = (target_size, target_size) # really don't need this
+
+        aspect_ratio = original_width / original_height
+        if aspect_ratio > 1:  # Width is greater than height
+            new_width = target_size
+            new_height = int(new_width / aspect_ratio)
+        else:  # Height is greater than width
+            new_height = target_size
+            new_width = int(new_height * aspect_ratio)
+
+        # Resize the image to fit within the square
+        resized_image = image.resize((new_width, new_height), Image.Resampling.LANCZOS)
+
+        # Create a new square image with a white background
+        square_image = Image.new("RGBA", required_size, (255, 255, 255, 255))
+
+        # Calculate the position to paste the resized image onto the square image
+        paste_position = ((required_size[0] - new_width) // 2, (required_size[1] - new_height) // 2)
+
+        # Paste the resized image onto the square image
+        square_image.paste(resized_image, paste_position)
+
+        # Update the resized_image variable to point to the square image
+        resized_image = square_image
     else:
         # Calculate the scaling factor to fit the image within the required dimensions
         original_width, original_height = image.size
@@ -83,8 +109,8 @@ def resize_image(image_path, output_path, platform):
     print(f'Resized image saved as: {output_path}')
 
 # Define the base directories
-vendor_og_dir = 'Vendor_OG_Images/AuburnLeather'
-vendor_resized_dir = 'Vendor_Resized_Images/AuburnLeather'
+vendor_og_dir = 'Vendor_OG_Images/LibertyTableTop'
+vendor_resized_dir = 'Vendor_Resized_Images/LibertyTableTop'
 
 for product_id in sorted(os.listdir(vendor_og_dir)):
     if product_id.startswith('.'):
