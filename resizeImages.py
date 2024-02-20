@@ -1,13 +1,15 @@
 # Importing???
 # Gabriel - consult with G to figure out what way we want to import - via CSV would be ideal
 
+# ToDo ASAP: Clean up code my god - DRY
+
 from PIL import Image, ImageOps
 import os
 
 # Define the size requirements for each platform
 size_requirements = {
     'RetailSite': (400, 400),
-    'GoogleMerchant': (100, 100),
+    'GoogleMerchant': (250, 250),
     'Facebook': (1200, 630),
     'LinkedIn': (1200, 627),
     'Twitter': (1200, 600),
@@ -109,16 +111,20 @@ def resize_image(image_path, output_path, platform):
     print(f'Resized image saved as: {output_path}')
 
 # Define the base directories
-vendor_og_dir = 'Vendor_OG_Images/LibertyTableTop'
-vendor_resized_dir = 'Vendor_Resized_Images/LibertyTableTop'
+vendor = 'KR_Creative'
+vendor_og_dir = f"Vendor_OG_Images/{vendor}"
+vendor_resized_dir = f'Vendor_Resized_Images/{vendor}'
 
 for product_id in sorted(os.listdir(vendor_og_dir)):
     if product_id.startswith('.'):
         continue 
     product_dir = os.path.join(vendor_og_dir, product_id)
+    #print("product dir: ", product_dir)
     #print(product_id)
     if os.path.isdir(product_dir):
         for image_name in os.listdir(product_dir):
+            if image_name.startswith('.'): #.DS_Store issue
+                continue
             input_path = os.path.join(product_dir, image_name)
             if os.path.isfile(input_path):
                 for platform, _ in size_requirements.items():
@@ -133,3 +139,29 @@ for product_id in sorted(os.listdir(vendor_og_dir)):
                     #output_path = f"{vendor_resized_dir}/{product_id}/{platform}/{image_name}"
                     output_path = os.path.join(output_dir, modified_image_name)
                     resize_image(input_path, output_path, platform)
+    gallery_dir = os.path.join(product_dir, 'GalleryImages')
+    #print("gallery dir: ", gallery_dir)
+    if os.path.isdir(gallery_dir):
+        # Run through each image in GalleryImages
+        for image_name in os.listdir(gallery_dir):
+            if image_name.startswith('.'):
+                continue
+            #print("image name: ", image_name)
+            input_path = os.path.join(gallery_dir, image_name)
+            #print("input path: ", input_path)
+            if os.path.isfile(input_path):
+                # Create output directory 
+                # vendor_resized_dir + product_id + GalleryImages Folder
+                output_dir = os.path.join(vendor_resized_dir, product_id, 'GalleryImages')
+                os.makedirs(output_dir, exist_ok=True)
+                #print("output_dir: ", output_dir)
+
+                # Output path = just add the image name you need to output_dir
+                output_path = os.path.join(output_dir, image_name)
+                resize_image(input_path, output_path, 'RetailSite')
+
+
+
+                
+
+
