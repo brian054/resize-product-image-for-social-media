@@ -1,8 +1,9 @@
 import os
 import json
 import requests
+from helpers import openImageURL
 
-vendor = 'KR_Creative'
+vendor = 'UPM'
 json_file_path = f'JSON/{vendor}.json'
 json_gallery = f'JSON/{vendor}_Gallery.json'
 
@@ -50,16 +51,20 @@ def download_gallery_images(json_data):
             os.makedirs(f'Vendor_OG_Images/{json_file_name}/{folder_name}/GalleryImages/', exist_ok=True)
             for image in item['images']:
                 image_url = image['url']
-                image_id = str(image['id']) # for the name
-                file_name = os.path.join(f'Vendor_OG_Images/{json_file_name}/{folder_name}/GalleryImages/', image_id + '.png')
-                response = requests.get(image_url)
-                if response.status_code == 200:
-                    with open(file_name, 'wb') as f:
-                        f.write(response.content)
-                    print("Downloaded Gallery Image from {image_url}")
+                # if we can actually open the image, download and save to OG image dir
+                if openImageURL(image_url) == True: 
+                    image_id = str(image['id']) # for the name
+                    file_name = os.path.join(f'Vendor_OG_Images/{json_file_name}/{folder_name}/GalleryImages/', image_id + '.png')
+                    response = requests.get(image_url)
+                    if response.status_code == 200:
+                        with open(file_name, 'wb') as f:
+                            f.write(response.content)
+                        print(f"Downloaded Gallery Image from {image_url}")
+                    else:
+                        print(f"Failed to download image {image_id} from {image_url}")
                 else:
-                    print("Failed to download image {image_id} from {image_url}")
+                    print("Failed to open Gallery image")
 
 # Download Thumbnail and Gallery Images
-process_products(json_file_path)
+# process_products(json_file_path)
 download_gallery_images(json_gallery)

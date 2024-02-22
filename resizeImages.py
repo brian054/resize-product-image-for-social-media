@@ -6,6 +6,7 @@
 from PIL import Image, ImageOps
 import os
 
+
 # Define the size requirements for each platform
 size_requirements = {
     'RetailSite': (400, 400),
@@ -26,6 +27,10 @@ def determine_retail_image_size(original_width, original_height):
 def resize_image(image_path, output_path, platform):
     # Open the image
     image = Image.open(image_path)
+
+    # If image can't be opened return nothing and move on 
+    # nope nope try opening the image in downloadImages.py, then if you can't open
+    # it then don't ever store it in the OG folder to begin with
 
     # Convert to RGBA if RGB (JPEG)
     if image.mode != 'RGBA':
@@ -111,7 +116,7 @@ def resize_image(image_path, output_path, platform):
     print(f'Resized image saved as: {output_path}')
 
 # Define the base directories
-vendor = 'KR_Creative'
+vendor = 'UPM'
 vendor_og_dir = f"Vendor_OG_Images/{vendor}"
 vendor_resized_dir = f'Vendor_Resized_Images/{vendor}'
 

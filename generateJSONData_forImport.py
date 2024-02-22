@@ -3,9 +3,9 @@ import json
 #import csv
 
 # Define the list of strings for the fifth column
-social_media_platforms = ["Facebook", "Instagram", "Twitter", "LinkedIn", "Google Merchant"]
+social_media_platforms = ["Facebook", "Instagram", "Twitter", "LinkedIn", "GoogleMerchant", "RetailSite"]
 
-vendor = 'KR_Creative'
+vendor = 'UPM'
 
 # Read the JSON data
 with open(f'JSON/{vendor}.json') as json_file:
@@ -18,24 +18,31 @@ json_data = []
 for item in data:
     for platform in social_media_platforms:
         id = item['id']
-        row = {
-            'id': id,
-            'name': item['name'],
-            'metaTitle': item['seo']['metaTitle'],
-            'metaDescription': item['seo']['metaDescription'],
-            'socialNetwork': platform,
-            'local_path': f'/Users/brian/Desktop/Python/Image-Resizer/Vendors_Resized_Images/{vendor}/{id}/{platform}_{id}.png',
-        }
+        if platform != 'RetailSite':
+            row = {
+                'id': id,
+                'name': item['name'],
+                'metaTitle': item['seo']['metaTitle'],
+                'metaDescription': item['seo']['metaDescription'],
+                'socialNetwork': platform,
+                'local_path': f'/Users/brian/Desktop/Python/Image-Resizer/Vendors_Resized_Images/{vendor}/{id}/{platform}_{id}.png',
+            }
+            # row = [
+            #     id,
+            #     item['name'],
+            #     item['seo']['metaTitle'],
+            #     item['seo']['metaDescription'],
+            #     platform,
+            #     f'/Users/brian/Desktop/Python/Image-Resizer/Vendors_Resized_Images/{vendor}/{id}/{platform}_{id}.png'
+            # ]
+            #csv_data.append(row)
+        else: 
+            row = {
+                'id': id,
+                'name': item['name'], # do we need name?
+                'local_path': f'/Users/brian/Desktop/Python/Image-Resizer/Vendors_Resized_Images/{vendor}/{id}/{platform}_{id}.png'
+            }
         json_data.append(row)
-        # row = [
-        #     id,
-        #     item['name'],
-        #     item['seo']['metaTitle'],
-        #     item['seo']['metaDescription'],
-        #     platform,
-        #     f'/Users/brian/Desktop/Python/Image-Resizer/Vendors_Resized_Images/{vendor}/{id}/{platform}_{id}.png'
-        # ]
-        #csv_data.append(row)
 
 # Write to CSV
 # csv_filename = f'CSV/{vendor}.csv'
@@ -62,11 +69,16 @@ for item in gallery_data:
     #print("Images: ", item['images'])
     if item['images'] is None:
         continue # move on to next iteration
+    # else 
+    # for loop through url's
+    # attempt opening them -> if doesn't open = 'ignore it in for loop below'
 
     product_id = item['id']
     product_name = item['name']
     for galleryImage in item['images']:
-        #print("GalleryImage: ", galleryImage) # contains id and url
+        # YO: This creates a row even if the image is broken - so in the Javascript
+        # import code you need to check if the local_path exists, if it doesn't then
+        # move on to the next
         row = {
             'product_id': product_id,
             'product_name': product_name,
