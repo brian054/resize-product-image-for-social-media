@@ -26,13 +26,18 @@ def process_products(json_file_path):
         count += 1
         product_id = product['id']
         image_url = product['thumbnail']['url']
+        image_id = product['thumbnail']['id']
 
         # Create a directory for the product ID
         dir_path = os.path.join(f'Vendor_OG_Images/{json_file_name}', str(product_id))
         os.makedirs(dir_path, exist_ok=True)
 
         # Define the path where the image will be saved
-        image_file_name = os.path.splitext(image_url.split('/')[-1])[0] + '.png'
+        #image_file_name = os.path.splitext(image_url.split('/')[-1])[0] + '.png'
+        
+        image_file_name = str(image_id) + '.png'
+        print("Imagefilename: ", image_file_name)
+        
         #print(image_file_name)
         save_path = os.path.join(dir_path, image_file_name)
 
@@ -66,5 +71,5 @@ def download_gallery_images(json_data):
                     print("Failed to open Gallery image")
 
 # Download Thumbnail and Gallery Images
-# process_products(json_file_path)
-download_gallery_images(json_gallery)
+process_products(json_file_path)
+download_gallery_images(json_file_path)

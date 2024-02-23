@@ -6,10 +6,10 @@
 from PIL import Image, ImageOps
 import os
 
-
 # Define the size requirements for each platform
 size_requirements = {
     'RetailSite': (400, 400),
+    'Pinterest': (1000, 1500),
     'GoogleMerchant': (250, 250),
     'Facebook': (1200, 630),
     'LinkedIn': (1200, 627),
@@ -116,7 +116,7 @@ def resize_image(image_path, output_path, platform):
     print(f'Resized image saved as: {output_path}')
 
 # Define the base directories
-vendor = 'UPM'
+vendor = 'LibertyTableTop'
 vendor_og_dir = f"Vendor_OG_Images/{vendor}"
 vendor_resized_dir = f'Vendor_Resized_Images/{vendor}'
 
