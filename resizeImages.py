@@ -1,5 +1,5 @@
 # Importing???
-# Gabriel - consult with G to figure out what way we want to import - via CSV would be ideal
+# Gabriel - consult with G to figure out what way we want to import - via JSON would be ideal
 
 # ToDo ASAP: Clean up code my god - DRY
 
@@ -116,7 +116,7 @@ def resize_image(image_path, output_path, platform):
     print(f'Resized image saved as: {output_path}')
 
 # Define the base directories
-vendor = 'LibertyTableTop'
+vendor = 'DuluthPack'
 vendor_og_dir = f"Vendor_OG_Images/{vendor}"
 vendor_resized_dir = f'Vendor_Resized_Images/{vendor}'
 
@@ -141,7 +141,6 @@ for product_id in sorted(os.listdir(vendor_og_dir)):
                     modified_image_name = f"{platform}_{product_id}{ext}"
                     print(modified_image_name)
 
-                    #output_path = f"{vendor_resized_dir}/{product_id}/{platform}/{image_name}"
                     output_path = os.path.join(output_dir, modified_image_name)
                     resize_image(input_path, output_path, platform)
     gallery_dir = os.path.join(product_dir, 'GalleryImages')
