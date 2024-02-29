@@ -1,4 +1,6 @@
 import requests
+import os
+import json
 from PIL import Image
 from io import BytesIO
 
@@ -20,6 +22,30 @@ def isSquareImage(url):
     width, height = img.size
     return width == height
 
+# Create JSON files for a list of vendor names
+def createJSONFiles(vendors):
+    for vendor in vendors:
+        file_path = os.path.join('JSON', f'{vendor}.json')
+        with open(file_path, 'w') as json_file:
+            json.dump('', json_file)
+
+vendors = [
+    "XenaTherapies",
+    "AuburnLeathercrafters",
+    "NewCreationsVictorian",
+    "SunHeat",
+    "HuberdShoeGrease",
+    "LetsGel",
+    "BeWellLabs",
+    "DevourTools",
+    "BarrelArt",
+    "MicrobeFiber",
+    "BubMutha",
+    "USACoasters",
+    "SpaPure",
+    "BetterWhey"
+]
+# createJSONFiles(vendors)
 
 # working
 url = "https://madeinusastrapiblob.blob.core.windows.net/uploads/assets/13194_4_7d1a697049"

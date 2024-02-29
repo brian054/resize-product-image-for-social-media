@@ -3,14 +3,6 @@ import json
 import requests
 from helpers import *
 
-# Create JSON files for a list of vendor names
-def createJSONFiles(vendors):
-    for vendor in vendors:
-        file_path = os.path.join('JSON', f'{vendor}.json')
-        with open(file_path, 'w') as json_file:
-            json.dump("", json_file)
-
-
 def download_image(image_url, save_path):
     response = requests.get(image_url)
     if response.status_code == 200:
@@ -96,38 +88,43 @@ def download_gallery_images(json_data):
 # DONT COMBINE - sometimes the response just breaks so sometimes need to download gallery img's separately
 # vendor = 'Edith'
 
-
 vendors = [
-    "BoldfootSocks",
-    "PanopticProduct",
-    "RoyToy",
-    "828Labs",
-    "FlagpoleFarm",
-    "EmersonCreekPottery",
-    "PeetShoeDrier",
-    "AlaskaRug",
-    "StellaRemi",
-    "DSCleaning",
-    "CmithMFG",
-    "SawyerMill",
-    "ParagonPro",
-    "ALBrands",
-    "ToughHook",
-    "ReadyWise",
-    "TinCup",
-    "WillowWattle",
-    "RedShirtFriday",
-    "CelebriDucks"
+    "DenaliHomeCollection",
+    "ConceptCosmetics",
+    "BunnyHopkins",
+    "WilkinsonThomasville",
+    "PurityGrace",
+    "SpunkyPup",
+    "VictorMill",
+    "Sladust",
+    "Scorezit",
+    "PETAU",
+    "WSISports",
+    "PuzzlePeople",
+    "RepackBox",
+    "NaturallyComplete",
+    "SunsOut",
+    "TomlinsonMFG",
+    "Eqpd",
+    "AltorSafety",
+    "OhioStoneware",
+    "GRIP6",
+    "ScarsStripesWellness",
+    "GerstnerSons",
+    "RamblersWay",
+    "GrassHole",
+    "KimKeyLimeCookies"
 ]
 
-createJSONFiles(vendors)
+#createJSONFiles(vendors)
 
-# for vendor in vendors:
-#     json_file_path = f"JSON/{vendor}.json"
+# YO YO MAKE SURE YOU RUN createJSONFIles() and fill in the data BEFORE running the for loop
+for vendor in vendors:
+    json_file_path = f"JSON/{vendor}.json"
 
-#     # Extract name for folder creation
-#     base_name = os.path.basename(json_file_path)
-#     json_file_name = os.path.splitext(base_name)[0]
+    # Extract name for folder creation
+    base_name = os.path.basename(json_file_path)
+    json_file_name = os.path.splitext(base_name)[0]
 
-#     process_products(json_file_path)
-#     download_gallery_images(json_file_path)
+    process_products(json_file_path)
+    download_gallery_images(json_file_path)
