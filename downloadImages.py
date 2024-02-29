@@ -3,7 +3,7 @@ import json
 import requests
 from helpers import *
 
-vendor = 'UPM'
+vendor = 'MurblesKramerKreations'
 json_file_path = f'JSON/{vendor}.json'
 #json_gallery = f'JSON/{vendor}_Gallery.json'
 
@@ -23,6 +23,10 @@ def process_products(json_file_path):
 
     count = 0
     for product in products:
+        # if the thumbnail doesn't exist, move on to the next entry
+        if product['thumbnail'] == None:
+            continue
+
         count += 1
         product_id = product['id']
         image_url = product['thumbnail']['url']
@@ -69,10 +73,10 @@ def download_gallery_images(json_data):
                     else:
                         print(f"Failed to download image {image_id} from {image_url}")
                 else:
-                    print("Gallery image either can't be opened or it is already a square ratio: " + str(count))
+                    print("Gallery image either can't be opened or it is already a square ratio: " + str(count) + ": " + image_url)
                     count += 1
 
 # Download Thumbnail and Gallery Images - can definitely combine these functions
 # DONT COMBINE - sometimes the response just breaks so sometimes need to download gallery img's separately
-#process_products(json_file_path)
+process_products(json_file_path)
 download_gallery_images(json_file_path)

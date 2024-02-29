@@ -116,7 +116,7 @@ def resize_image(image_path, output_path, platform):
     print(f'Resized image saved as: {output_path}')
 
 # Define the base directories
-vendor = 'DuluthPack'
+vendor = 'ScrollsUnlimited'
 vendor_og_dir = f"Vendor_OG_Images/{vendor}"
 vendor_resized_dir = f'Vendor_Resized_Images/{vendor}'
 

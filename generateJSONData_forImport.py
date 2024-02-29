@@ -4,7 +4,7 @@ from helpers import *
 # Define the list of strings for the fifth column
 social_media_platforms = ["Facebook", "Instagram", "Twitter", "LinkedIn", "GoogleMerchant", "Pinterest"] 
 
-vendor = 'UPM'
+vendor = 'AccelLifestyle'
 
 # Read the JSON data
 with open(f'JSON/{vendor}.json') as json_file:
@@ -18,12 +18,13 @@ for item in data:
     product_name = item['name']
 
     # Thumbnail Setup
-    thumbnail_id = item['thumbnail']['id']
-    thumbnail_local_path = f'/Users/brian/Desktop/Python/Image-Resizer/Vendors_Resized_Images/{vendor}/{product_id}/RetailSite_{product_id}.png'
-    thumbnail_entry = {
-        "id": thumbnail_id,
-        "local_path": thumbnail_local_path 
-    }
+    if item['thumbnail'] != None:
+        thumbnail_id = item['thumbnail']['id']
+        thumbnail_local_path = f'/Users/brian/Desktop/Python/Image-Resizer/Vendors_Resized_Images/{vendor}/{product_id}/RetailSite_{product_id}.png'
+        thumbnail_entry = {
+            "id": thumbnail_id,
+            "local_path": thumbnail_local_path 
+        }
 
     # Gallery Image JSON prep
     gallery_images_json = []
@@ -49,18 +50,19 @@ for item in data:
     # Social Media JSON Prep
     social_media_json = []
     for platform in social_media_platforms:
-        metaTitle = item['seo']['metaTitle']
-        metaDescription = item['seo']['metaDescription']
-        socialNetwork = platform
-        local_path = f'/Users/brian/Desktop/Python/Image-Resizer/Vendors_Resized_Images/{vendor}/{product_id}/{platform}_{product_id}.png'
+        if item['seo'] != None:
+            metaTitle = item['seo']['metaTitle']
+            metaDescription = item['seo']['metaDescription']
+            socialNetwork = platform
+            local_path = f'/Users/brian/Desktop/Python/Image-Resizer/Vendors_Resized_Images/{vendor}/{product_id}/{platform}_{product_id}.png'
 
-        social_media_entry = {
-            'metaTitle': metaTitle,
-            'metaDescription': metaDescription,
-            'socialNetwork': socialNetwork,
-            'local_path': local_path
-        }
-        social_media_json.append(social_media_entry)
+            social_media_entry = {
+                'metaTitle': metaTitle,
+                'metaDescription': metaDescription,
+                'socialNetwork': socialNetwork,
+                'local_path': local_path
+            }
+            social_media_json.append(social_media_entry)
 
     # now for the grand finale put it all together
     single_row_json = {
