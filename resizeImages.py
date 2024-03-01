@@ -116,31 +116,20 @@ def resize_image(image_path, output_path, platform):
 # vendor = 'CrucialCritters'
     
 vendors = [
-    "DenaliHomeCollection",
-    "ConceptCosmetics",
-    "BunnyHopkins",
-    "WilkinsonThomasville",
-    "PurityGrace",
-    "SpunkyPup",
-    "VictorMill",
-    "Sladust",
-    "Scorezit",
-    "PETAU",
-    "WSISports",
-    "PuzzlePeople",
-    "RepackBox",
-    "NaturallyComplete",
-    "SunsOut",
-    "TomlinsonMFG",
-    "Eqpd",
-    "AltorSafety",
-    "OhioStoneware",
-    "GRIP6",
-    "ScarsStripesWellness",
-    "GerstnerSons",
-    "RamblersWay",
-    "GrassHole",
-    "KimKeyLimeCookies"
+    "XenaTherapies",
+    "AuburnLeathercrafters",
+    "NewCreationsVictorian",
+    "SunHeat",
+    "HuberdShoeGrease",
+    "LetsGel",
+    "BeWellLabs",
+    "DevourTools",
+    "BarrelArt",
+    "MicrobeFiber",
+    "BubMutha",
+    "USACoasters",
+    "SpaPure",
+    "BetterWhey"
 ]
 
 for vendor in vendors:

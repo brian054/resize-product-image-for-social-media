@@ -57,7 +57,7 @@ def resize_image(image_path, output_path, size):
 vendor = 'BestNest'
 vendor_og_dir = f"Vendor_OG_Images/{vendor}"
 vendor_resized_dir = f'CustomResize/{vendor}'
-new_size = 400
+new_size = 600
 
 for product_id in sorted(os.listdir(vendor_og_dir)):
     if product_id.startswith('.'):
@@ -67,6 +67,10 @@ for product_id in sorted(os.listdir(vendor_og_dir)):
         for image_name in os.listdir(product_dir):
             if image_name.startswith('.'): #.DS_Store issue
                 continue
+            if image_name.endswith('.jpeg') == False: # just a one off issue idk why it's happening
+                # Add extension before setting input path
+                if image_name.endswith('.webp') == False:
+                    image_name += '.jpeg'
             input_path = os.path.join(product_dir, image_name)
             if os.path.isfile(input_path):
                 # Create output directory
@@ -74,8 +78,13 @@ for product_id in sorted(os.listdir(vendor_og_dir)):
                 os.makedirs(output_dir, exist_ok=True)
 
                 # Modify image name 
-                _, ext = os.path.splitext(image_name)
-                modified_image_name = f"{vendor}_{product_id}{ext}"
+                print("ImageName: ", image_name)
+                #_, ext = os.path.splitext(image_name)
+                modified_image_name = f"{vendor}_{product_id}.png"
+                print("M-ImageName: ", modified_image_name)
+
+                print("Input Path: ", input_path)
+                
 
                 output_path = os.path.join(output_dir, modified_image_name)
                 resize_image(input_path, output_path, new_size)

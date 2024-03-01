@@ -89,34 +89,23 @@ def download_gallery_images(json_data):
 # vendor = 'Edith'
 
 vendors = [
-    "DenaliHomeCollection",
-    "ConceptCosmetics",
-    "BunnyHopkins",
-    "WilkinsonThomasville",
-    "PurityGrace",
-    "SpunkyPup",
-    "VictorMill",
-    "Sladust",
-    "Scorezit",
-    "PETAU",
-    "WSISports",
-    "PuzzlePeople",
-    "RepackBox",
-    "NaturallyComplete",
-    "SunsOut",
-    "TomlinsonMFG",
-    "Eqpd",
-    "AltorSafety",
-    "OhioStoneware",
-    "GRIP6",
-    "ScarsStripesWellness",
-    "GerstnerSons",
-    "RamblersWay",
-    "GrassHole",
-    "KimKeyLimeCookies"
+    "XenaTherapies",
+    "AuburnLeathercrafters",
+    "NewCreationsVictorian",
+    "SunHeat",
+    "HuberdShoeGrease",
+    "LetsGel",
+    "BeWellLabs",
+    "DevourTools",
+    "BarrelArt",
+    "MicrobeFiber",
+    "BubMutha",
+    "USACoasters",
+    "SpaPure",
+    "BetterWhey"
 ]
 
-#createJSONFiles(vendors)
+# createJSONFiles(vendors)
 
 # YO YO MAKE SURE YOU RUN createJSONFIles() and fill in the data BEFORE running the for loop
 for vendor in vendors:
